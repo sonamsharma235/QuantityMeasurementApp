@@ -1,48 +1,23 @@
-package com.example.QuantityMeasurementApp;
+public class QuantityMeasurementApp {
 
-public class QuantityMeasuringApp {
-	
-   public static class Feet{
-	   private final double value;
-	   
-	   public Feet(double value) {
-		   this.value=value;
-	   }
-	   
-	   @Override
-	   public boolean equals(Object obj) {
-		    
-		   if(this==obj) {
-			   return true;
-		   }
-		   
-		   if(obj==null) {
-			   return false;
-		   }
-		   
-		   if(getClass()!=obj.getClass()) {
-			   return false;
-		   }
-		   
-		   Feet f=(Feet)obj;
-		   
-		   return Double.compare(this.value, f.value)==0;
-	   }
-	   
-	   @Override
-	   public int hashCode() {
-		   return Double.hashCode(value);
-	   }
-   }
-   
-   public static void main(String[]args) {
-	   
-	   Feet v1=new Feet(1.0);
-	   Feet v2=new Feet(null);
-	   
-	   boolean result=v1.equals(v2);
-	   
-	   System.out.println("both are : "+result);
-	   
-   }
+    public static boolean compareFeet(double value1, double value2) {
+        Feet feet1 = new Feet(value1);
+        Feet feet2 = new Feet(value2);
+        return feet1.equals(feet2);
+    }
+
+    public static boolean compareInches(double value1, double value2) {
+        Inches inch1 = new Inches(value1);
+        Inches inch2 = new Inches(value2);
+        return inch1.equals(inch2);
+    }
+
+    public static void main(String[] args) {
+
+        System.out.println("1.0 inch and 1.0 inch -> " +
+                compareInches(1.0, 1.0));
+
+        System.out.println("1.0 ft and 1.0 ft -> " +
+                compareFeet(1.0, 1.0));
+    }
 }
