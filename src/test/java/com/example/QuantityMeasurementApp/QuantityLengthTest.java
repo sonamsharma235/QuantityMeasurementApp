@@ -69,3 +69,4 @@ class QuantityLengthTest {
                 () -> new QuantityLength(Double.NaN, LengthUnit.FEET));
     }
 }
+
