@@ -1,64 +1,41 @@
-package com.quantity.QuantityApp;
-
+package QuantityMeasurementApplication;
+import java.util.*;
 public class QuantityMeasurementApp {
+	//generic method to demonstrate Length equality check
+	public static boolean demonstrateLengthEquality(Length length1, Length length2) {
+		if (length1 == null || length2 == null) {
+			return false;
+		}
 
-    public static void main(String[] args) {
-    	System.out.println("======== EQUALITY TESTS (UC4) ========");
+		boolean result = length1.equals(length2);
+		System.out.println("Comparing: " + length1 + " and " + length2);
+		System.out.println("Are equal? " + result);
+		return result;
+	}
+	//overloaded method to accept raw values and units
+	public static boolean demonstrateLengthComparison(double value1, Length.LengthUnit unit1, double value2,
+			Length.LengthUnit unit2) {
 
-    	 QuantityLength q1 =  new QuantityLength(1.0, LengthUnit.YARDS);
-         QuantityLength q2 =  new QuantityLength(3.0, LengthUnit.FEET);
+		Length length1 = new Length(value1, unit1);
+		Length length2 = new Length(value2, unit2);
 
-         System.out.println("Input: " + q1 + " and " + q2);
-         System.out.println("Output: Equal (" + q1.equals(q2) + ")");
+		return demonstrateLengthEquality(length1, length2);
+	}
 
-         QuantityLength q3 =  new QuantityLength(1.0, LengthUnit.YARDS);
-         QuantityLength q4 =new QuantityLength(36.0, LengthUnit.INCH);
 
-         System.out.println("Input: " + q3 + " and " + q4);
-         System.out.println("Output: Equal (" + q3.equals(q4) + ")");
 
-         QuantityLength q5 =  new QuantityLength(1.0, LengthUnit.CENTIMETERS);
-         QuantityLength q6 =  new QuantityLength(0.393701, LengthUnit.INCH);
+	public static void main(String[] args) {
 
-         System.out.println("Input: " + q5 + " and " + q6);
-         System.out.println("Output: Equal (" + q5.equals(q6) + ")");
-         
-      // Static conversion calls
-         System.out.println("\n======== STATIC CONVERSION TESTS (UC5) ========");
+        Length l1 =
+                new Length(1.0,
+                        Length.LengthUnit.FEET);
 
-         System.out.println("1 FOOT to INCH = " +
-                 QuantityLength.convert(1.0,
-                         LengthUnit.FEET,
-                         LengthUnit.INCH));
+        Length l2 =
+                new Length(12.0,
+                        Length.LengthUnit.INCHES);
 
-         System.out.println("3 YARDS to FEET = " +
-                 QuantityLength.convert(3.0,
-                         LengthUnit.YARDS,
-                         LengthUnit.FEET));
+        Length result = l1.add(l2);
 
-         System.out.println("36 INCH to YARDS = " +
-                 QuantityLength.convert(36.0,
-                         LengthUnit.INCH,
-                         LengthUnit.YARDS));
-
-         System.out.println("2.54 CM to INCH = " +
-                 QuantityLength.convert(2.54,
-                         LengthUnit.CENTIMETERS,
-                         LengthUnit.INCH));
-         
-         System.out.println("\n======== INSTANCE CONVERSION TESTS ========");
-
-         QuantityLength length = new QuantityLength(5.0, LengthUnit.FEET);
-         QuantityLength converted = length.convertTo(LengthUnit.INCH);
-
-         System.out.println(length + " → " + converted);
-
-         QuantityLength negativeLength = new QuantityLength(-2.0, LengthUnit.YARDS);
-         System.out.println(negativeLength + " → " +
-                 negativeLength.convertTo(LengthUnit.FEET));
-
-         QuantityLength zeroLength = new QuantityLength(0.0, LengthUnit.FEET);
-         System.out.println(zeroLength + " → " +
-                 zeroLength.convertTo(LengthUnit.INCH));
+        System.out.println(result);
     }
 }
