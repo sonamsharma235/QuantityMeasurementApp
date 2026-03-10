@@ -1,4 +1,4 @@
-package src.main.java.com.example.QuantityMeasurementApp;
+package QuantityMeasurementApplication;
 
 public class QuantityMeasurementApp {
 
@@ -19,47 +19,38 @@ public class QuantityMeasurementApp {
 
         System.out.println("Sum = " + q1.add(q2, targetUnit));
     }
+    //uc12
+    public static <U extends IMeasurable> void demonstrateSubtraction(
+            Quantity<U> q1, Quantity<U> q2) {
+
+        Quantity<U> result = q1.subtract(q2);
+
+        System.out.println("Subtracting: " + q1 + " - " + q2);
+        System.out.println("Result: " + result);
+    }
+    
+    public static <U extends IMeasurable> void demonstrateDivision(
+            Quantity<U> q1, Quantity<U> q2) {
+
+        double result = q1.divide(q2);
+
+        System.out.println("Dividing: " + q1 + " / " + q2);
+        System.out.println("Result: " + result);
+    }
 
     public static void main(String[] args) {
 
-        // Length examples
         Quantity<LengthUnit> feet =
-                new Quantity<>(1.0, LengthUnit.FEET);
+                new Quantity<>(10.0, LengthUnit.FEET);
 
         Quantity<LengthUnit> inches =
-                new Quantity<>(12.0, LengthUnit.INCHES);
+                new Quantity<>(6.0, LengthUnit.INCHES);
 
-        demonstrateEquality(feet, inches);
+        demonstrateSubtraction(feet, inches);
 
-        demonstrateConversion(feet, LengthUnit.INCHES);
-
-        demonstrateAddition(feet, inches, LengthUnit.FEET);
-
-
-        // Weight examples
-        Quantity<WeightUnit> kg =
-                new Quantity<>(1.0, WeightUnit.KILOGRAM);
-
-        Quantity<WeightUnit> gram =
-                new Quantity<>(1000.0, WeightUnit.GRAM);
-
-        demonstrateEquality(kg, gram);
-
-        demonstrateConversion(kg, WeightUnit.GRAM);
-
-        demonstrateAddition(kg, gram, WeightUnit.KILOGRAM);
-
-        //Volume Unit examples
-        Quantity<VolumeUnit> litre = 
-                new Quantity<>(15.0,VolumeUnit.LITRE);
-
-        Quantity<VolumeUnit> ml = 
-                new Quantity<>(15000.0,VolumeUnit.MILLILITRE);
-
-        demonstrateEquality(litre, ml);
-
-        demonstrateConversion(litre, VolumeUnit.GALLON);
-
-        demonstrateAddition(litre, ml VolumeUnit.GALLON);
+        demonstrateDivision(
+                new Quantity<>(10.0, LengthUnit.FEET),
+                new Quantity<>(2.0, LengthUnit.FEET)
+        );
     }
 }
