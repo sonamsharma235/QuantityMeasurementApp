@@ -1,15 +1,14 @@
 package src.main.java.com.example.QuantityMeasurementApp;
 
-public enum LengthUnit implements IMeasurable {
+public enum VolumeUnit implements IMeasurable {
 
-    INCHES(1.0),
-    FEET(12.0),
-    YARDS(36.0),
-    CENTIMETERS(0.393701);
+    GALLON(3.78541),
+    LITRE(1.0),
+    MILLILITRE(0.001);
 
     private final double conversionFactor;
 
-    LengthUnit(double conversionFactor) {
+    VolumeUnit(double conversionFactor) {
         this.conversionFactor = conversionFactor;
     }
 

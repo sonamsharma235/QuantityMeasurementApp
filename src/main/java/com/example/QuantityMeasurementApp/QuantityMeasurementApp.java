@@ -1,4 +1,4 @@
-package QuantityMeasurementApplication;
+package src.main.java.com.example.QuantityMeasurementApp;
 
 public class QuantityMeasurementApp {
 
@@ -48,5 +48,18 @@ public class QuantityMeasurementApp {
         demonstrateConversion(kg, WeightUnit.GRAM);
 
         demonstrateAddition(kg, gram, WeightUnit.KILOGRAM);
+
+        //Volume Unit examples
+        Quantity<VolumeUnit> litre = 
+                new Quantity<>(15.0,VolumeUnit.LITRE);
+
+        Quantity<VolumeUnit> ml = 
+                new Quantity<>(15000.0,VolumeUnit.MILLILITRE);
+
+        demonstrateEquality(litre, ml);
+
+        demonstrateConversion(litre, VolumeUnit.GALLON);
+
+        demonstrateAddition(litre, ml VolumeUnit.GALLON);
     }
 }

@@ -1,4 +1,4 @@
-package QuantityMeasurementApplication;
+package src.main.java.com.example.QuantityMeasurementApp;
 
 import java.util.Objects;
 
