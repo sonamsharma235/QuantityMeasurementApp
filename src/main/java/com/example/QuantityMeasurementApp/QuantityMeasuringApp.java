@@ -1,4 +1,6 @@
-public class QuantityMeasurementApp {
+package com.example.QuantityMeasurementApp;
+
+public class QuantityMeasuringApp {
 
     public static boolean compareFeet(double value1, double value2) {
         Feet feet1 = new Feet(value1);

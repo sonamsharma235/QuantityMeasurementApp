@@ -1,3 +1,5 @@
+package com.example.QuantityMeasurementApp;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,15 +8,15 @@ class QuantityMeasurementTest {
     // Same value test
     @Test
     void testEquality_SameValue() {
-        assertTrue(QuantityMeasurementApp.compareFeet(1.0, 1.0));
-        assertTrue(QuantityMeasurementApp.compareInches(2.5, 2.5));
+        assertTrue(QuantityMeasuringApp.compareFeet(1.0, 1.0));
+        assertTrue(QuantityMeasuringApp.compareInches(2.5, 2.5));
     }
 
     // Different value test
     @Test
     void testEquality_DifferentValue() {
-        assertFalse(QuantityMeasurementApp.compareFeet(1.0, 2.0));
-        assertFalse(QuantityMeasurementApp.compareInches(5.0, 6.0));
+        assertFalse(QuantityMeasuringApp.compareFeet(1.0, 2.0));
+        assertFalse(QuantityMeasuringApp.compareInches(5.0, 6.0));
     }
 
     // Null comparison test

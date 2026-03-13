@@ -1,3 +1,5 @@
+package com.example.QuantityMeasurementApp;
+
 public class Feet {
 
     private final double value;
