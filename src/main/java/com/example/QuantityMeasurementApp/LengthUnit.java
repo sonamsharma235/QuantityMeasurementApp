@@ -1,4 +1,4 @@
-package src.main.java.com.example.QuantityMeasurementApp;
+package com.example.QuantityMeasurementApp;
 
 public enum LengthUnit implements IMeasurable {
 

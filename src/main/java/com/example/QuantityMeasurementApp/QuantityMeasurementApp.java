@@ -1,4 +1,4 @@
-package src.main.java.com.example.QuantityMeasurementApp;
+package com.example.QuantityMeasurementApp;
 
 public class QuantityMeasurementApp {
 
@@ -60,6 +60,6 @@ public class QuantityMeasurementApp {
 
         demonstrateConversion(litre, VolumeUnit.GALLON);
 
-        demonstrateAddition(litre, ml VolumeUnit.GALLON);
+        demonstrateAddition(litre, ml,VolumeUnit.GALLON);
     }
 }
