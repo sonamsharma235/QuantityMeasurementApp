@@ -1,3 +1,5 @@
+package com.example.QuantityMeasurementApp;
+
 import java.util.Objects;
 
 public class QuantityLength {
