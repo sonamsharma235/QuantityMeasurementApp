@@ -1,3 +1,5 @@
+package com.example.QuantityMeasurementApp;
+
 public class Inches {
 
     private final double value;

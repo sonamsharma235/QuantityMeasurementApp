@@ -1,3 +1,4 @@
+package com.example.QuantityMeasurementApp;
 public class QuantityMeasurementApp {
 
     public static boolean compareFeet(double value1, double value2) {
