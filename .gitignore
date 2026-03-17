@@ -1,47 +1,11 @@
-# Maven
-target/
-!**/src/main/**/target/
-!**/src/test/**/target/
+# Ignore everything
+*
 
-# Logs
-*.log
+# Allow only required files
+!src/
+!src/**
+!README.md
+!pom.xml
 
-# OS files
-.DS_Store
-Thumbs.db
-
-# IDE - Eclipse / STS
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings/
-.springBeans
-.sts4-cache
-
-# IntelliJ
-.idea/
-*.iws
-*.iml
-*.ipr
-
-# NetBeans
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-# VS Code
-.vscode/
-
-# Maven Wrapper (KEEP THESE in real projects)
-# .mvn/
-# mvnw
-# mvnw.cmd
-
-# Environment files
-.env
+# Keep gitignore itself
+!.gitignore
