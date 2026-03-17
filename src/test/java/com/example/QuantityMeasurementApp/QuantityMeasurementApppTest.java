@@ -1,45 +1,101 @@
 package com.example.QuantityMeasurementApp;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
-class QuantityMeasurementTest {
+import com.example.QuantityMeasurementApp.controller.QuantityMeasurementController;
+import com.example.QuantityMeasurementApp.dto.QuantityDTO;
+import com.example.QuantityMeasurementApp.repository.QuantityMeasurementCacheRepository;
+import com.example.QuantityMeasurementApp.service.IQuantityMeasurementService;
+import com.example.QuantityMeasurementApp.service.QuantityMeasurementServiceImpl;
 
-    // Same value test
-    @Test
-    void testEquality_SameValue() {
-        assertTrue(QuantityMeasuringApp.compareFeet(1.0, 1.0));
-        assertTrue(QuantityMeasuringApp.compareInches(2.5, 2.5));
-    }
+public class QuantityMeasurementApppTest {
 
-    // Different value test
-    @Test
-    void testEquality_DifferentValue() {
-        assertFalse(QuantityMeasuringApp.compareFeet(1.0, 2.0));
-        assertFalse(QuantityMeasuringApp.compareInches(5.0, 6.0));
-    }
+	private IQuantityMeasurementService service;
+	private QuantityMeasurementController controller;
 
-    // Null comparison test
-    @Test
-    void testEquality_NullComparison() {
-        Feet feet = new Feet(1.0);
-        assertFalse(feet.equals(null));
-    }
+	@BeforeEach
+	void setup() {
 
-    // Same reference test
-    @Test
-    void testEquality_SameReference() {
-        Feet feet = new Feet(3.0);
-        assertTrue(feet.equals(feet));
-    }
+		QuantityMeasurementCacheRepository repository = QuantityMeasurementCacheRepository.getInstance();
 
-    // Non-numeric input test
-    @Test
-    void testEquality_NonNumericInput() {
-        assertThrows(IllegalArgumentException.class,
-                () -> new Feet(Double.NaN));
+		service = new QuantityMeasurementServiceImpl(repository);
 
-        assertThrows(IllegalArgumentException.class,
-                () -> new Inches(Double.POSITIVE_INFINITY));
-    }
+		controller = new QuantityMeasurementController(service);
+	}
+
+	@Test
+	void testAddition_Success() {
+
+		QuantityDTO q1 = new QuantityDTO(10, "METER");
+		QuantityDTO q2 = new QuantityDTO(5, "METER");
+
+		double result = service.add(q1, q2);
+
+		assertEquals(15, result);
+	}
+
+	@Test
+	void testSubtraction_Success() {
+
+		QuantityDTO q1 = new QuantityDTO(10, "METER");
+		QuantityDTO q2 = new QuantityDTO(5, "METER");
+
+		double result = service.subtract(q1, q2);
+
+		assertEquals(5, result);
+	}
+
+	@Test
+	void testDivision_Success() {
+
+		QuantityDTO q1 = new QuantityDTO(10, "METER");
+		QuantityDTO q2 = new QuantityDTO(5, "METER");
+
+		double result = service.divide(q1, q2);
+
+		assertEquals(2, result);
+	}
+
+	@Test
+	void testDivision_ByZero() {
+
+		QuantityDTO q1 = new QuantityDTO(10, "METER");
+		QuantityDTO q2 = new QuantityDTO(0, "METER");
+
+		assertThrows(ArithmeticException.class, () -> {
+			service.divide(q1, q2);
+		});
+	}
+
+	@Test
+	void testController_PerformAddition() {
+
+		QuantityDTO q1 = new QuantityDTO(20, "METER");
+		QuantityDTO q2 = new QuantityDTO(10, "METER");
+
+		assertDoesNotThrow(() -> controller.performAddition(q1, q2));
+	}
+
+	@Test
+	void testController_PerformSubtraction() {
+
+		QuantityDTO q1 = new QuantityDTO(20, "METER");
+		QuantityDTO q2 = new QuantityDTO(10, "METER");
+
+		assertDoesNotThrow(() -> controller.performSubtraction(q1, q2));
+	}
+
+	@Test
+	void testController_PerformDivision() {
+
+		QuantityDTO q1 = new QuantityDTO(20, "METER");
+		QuantityDTO q2 = new QuantityDTO(10, "METER");
+
+		assertDoesNotThrow(() -> controller.performDivision(q1, q2));
+	}
 }
