@@ -1,4 +1,4 @@
-package QuantityMeasurementApplicationTest;
+package com.example.QuantityMeasurementApp;
 
 
 import org.junit.jupiter.api.Test;
