@@ -38,7 +38,7 @@ public class QuantityMeasuringApp {
    public static void main(String[]args) {
 	   
 	   Feet v1=new Feet(1.0);
-	   Feet v2=new Feet(null);
+	   Feet v2=new Feet(1.0);
 	   
 	   boolean result=v1.equals(v2);
 	   
