@@ -1,3 +1,5 @@
+package com.example.QuantityMeasurementApp;
+
 public enum LengthUnit {
 
     FEET(1.0),
