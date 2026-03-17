@@ -1,4 +1,4 @@
-package src.main.java.com.example.QuantityMeasurementApp;
+package com.example.QuantityMeasurementApp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
