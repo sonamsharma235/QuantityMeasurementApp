@@ -1,6 +1,4 @@
 package com.example.QuantityMeasurementApp;
-
-
 public class Length {
 
     private final double value;
