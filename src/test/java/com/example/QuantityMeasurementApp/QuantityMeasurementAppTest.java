@@ -2,9 +2,10 @@ package com.example.QuantityMeasurementApp;
 
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
-import QuantityMeasurementApplication.Length;
-import QuantityMeasurementApplication.QuantityMeasurementApp;
+//import QuantityMeasurementApplication.Length;
+//import QuantityMeasurementApplication.QuantityMeasurementApp;
 class QuantityMeasurementAppTest {
 	@Test
 	public void testEquality_SameUnit_FeetEqualsFeet() {
