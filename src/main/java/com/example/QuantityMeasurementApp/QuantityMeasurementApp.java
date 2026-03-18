@@ -9,7 +9,7 @@ import com.example.QuantityMeasurementApp.service.QuantityMeasurementServiceImpl
 public class QuantityMeasurementApp {
 
 	public static void main(String[] args) {
-
+		
 		QuantityMeasurementCacheRepository repository = QuantityMeasurementCacheRepository.getInstance();
 
 		IQuantityMeasurementService service = new QuantityMeasurementServiceImpl(repository);

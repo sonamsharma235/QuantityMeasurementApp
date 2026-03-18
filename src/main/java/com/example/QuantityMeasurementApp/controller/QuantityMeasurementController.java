@@ -30,4 +30,17 @@ public class QuantityMeasurementController {
 
 		System.out.println("Division Result = " + result);
 	}
+	
+	public void showAll() {
+		service.getAll().forEach(System.out::println);
+	}
+
+	public void showCount() {
+		System.out.println("Total Records = " + service.count());
+	}
+
+	public void deleteAll() {
+		service.deleteAll();
+		System.out.println("All records deleted");
+	}
 }
