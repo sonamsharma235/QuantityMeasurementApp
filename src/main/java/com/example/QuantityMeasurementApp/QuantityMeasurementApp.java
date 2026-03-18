@@ -26,13 +26,9 @@ public class QuantityMeasurementApp {
 
 	public static void main(String[] args) {
 
-        Length l1 =
-                new Length(1.0,
-                        Length.LengthUnit.FEET);
+        Length l1 =new Length(1.0,Length.LengthUnit.FEET);
 
-        Length l2 =
-                new Length(12.0,
-                        Length.LengthUnit.INCHES);
+        Length l2 =new Length(12.0,Length.LengthUnit.INCHES);
 
         Length result = l1.add(l2);
 
