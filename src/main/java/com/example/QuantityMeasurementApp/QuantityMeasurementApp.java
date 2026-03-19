@@ -2,74 +2,97 @@ package com.example.QuantityMeasurementApp;
 
 public class QuantityMeasurementApp {
 
-    public static <U extends IMeasurable> void demonstrateEquality(
-            Quantity<U> q1, Quantity<U> q2) {
+	public static <U extends IMeasurable> void demonstrateEquality(Quantity<U> q1, Quantity<U> q2) {
+		System.out.println(q1 + " equals " + q2 + " : " + q1.equals(q2));
+	}
 
-        System.out.println(q1 + " equals " + q2 + " : " + q1.equals(q2));
-    }
+	public static <U extends IMeasurable> void demonstrateConversion(Quantity<U> q, U targetUnit) {
+		System.out.println(q + " = " + q.convertTo(targetUnit));
+	}
 
-    public static <U extends IMeasurable> void demonstrateConversion(
-            Quantity<U> quantity, U targetUnit) {
+	public static <U extends IMeasurable> void demonstrateAddition(Quantity<U> q1, Quantity<U> q2, U targetUnit) {
+		System.out.println("Sum = " + q1.add(q2, targetUnit));
+	}
 
-        System.out.println(quantity + " = " + quantity.convertTo(targetUnit));
-    }
+	public static <U extends IMeasurable> void demonstrateSubtraction(Quantity<U> q1, Quantity<U> q2, U targetUnit) {
+		System.out.println("Difference = " + q1.subtract(q2, targetUnit));
+	}
 
-    public static <U extends IMeasurable> void demonstrateAddition(
-            Quantity<U> q1, Quantity<U> q2, U targetUnit) {
+	public static <U extends IMeasurable> void demonstrateDivision(Quantity<U> q1, Quantity<U> q2) {
+		System.out.println("Ratio = " + q1.divide(q2));
+	}
 
-        System.out.println("Adding: " + q1 + " + " + q2);
-        System.out.println("Result: " + q1.add(q2, targetUnit));
-    }
+	public static void main(String[] args) {
 
-    // UC12
-    public static <U extends IMeasurable> void demonstrateSubtraction(
-            Quantity<U> q1, Quantity<U> q2) {
+		System.out.println("========== QUANTITY MEASUREMENT APP ==========");
 
-        Quantity<U> result = q1.subtract(q2);
+		// ===== LENGTH =====
+		System.out.println("\n===== LENGTH =====");
 
-        System.out.println("Subtracting: " + q1 + " - " + q2);
-        System.out.println("Result: " + result);
-    }
+		Quantity<LengthUnit> feet = new Quantity<>(10.0, LengthUnit.FEET);
+		Quantity<LengthUnit> inches = new Quantity<>(12.0, LengthUnit.INCHES);
 
-    public static <U extends IMeasurable> void demonstrateDivision(
-            Quantity<U> q1, Quantity<U> q2) {
+		demonstrateEquality(feet, inches);
+		demonstrateConversion(feet, LengthUnit.INCHES);
+		demonstrateAddition(feet, inches, LengthUnit.FEET);
+		demonstrateSubtraction(feet, inches, LengthUnit.FEET);
+		demonstrateDivision(feet, new Quantity<>(2.0, LengthUnit.FEET));
 
-        double result = q1.divide(q2);
+		// ===== WEIGHT =====
+		System.out.println("\n===== WEIGHT =====");
 
-        System.out.println("Dividing: " + q1 + " / " + q2);
-        System.out.println("Result: " + result);
-    }
+		Quantity<WeightUnit> kg = new Quantity<>(5.0, WeightUnit.KILOGRAM);
+		Quantity<WeightUnit> gram = new Quantity<>(500.0, WeightUnit.GRAM);
 
-    public static void main(String[] args) {
+		demonstrateEquality(kg, gram);
+		demonstrateConversion(kg, WeightUnit.GRAM);
+		demonstrateAddition(kg, gram, WeightUnit.KILOGRAM);
+		demonstrateSubtraction(kg, gram, WeightUnit.KILOGRAM);
+		demonstrateDivision(kg, new Quantity<>(2.0, WeightUnit.KILOGRAM));
 
-        Quantity<LengthUnit> feet =
-                new Quantity<>(10.0, LengthUnit.FEET);
+		// ===== VOLUME =====
+		System.out.println("\n===== VOLUME =====");
 
-        Quantity<LengthUnit> inches =
-                new Quantity<>(6.0, LengthUnit.INCHES);
+		Quantity<VolumeUnit> litre = new Quantity<>(5.0, VolumeUnit.LITRE);
+		Quantity<VolumeUnit> ml = new Quantity<>(500.0, VolumeUnit.MILLILITRE);
+		Quantity<VolumeUnit> gallon = new Quantity<>(1.0, VolumeUnit.GALLON);
 
-        // Addition
-        demonstrateAddition(feet, inches, LengthUnit.FEET);
+		demonstrateEquality(litre, ml);
+		demonstrateConversion(litre, VolumeUnit.MILLILITRE);
+		demonstrateConversion(gallon, VolumeUnit.LITRE);
+		demonstrateAddition(litre, ml, VolumeUnit.LITRE);
+		demonstrateSubtraction(litre, ml, VolumeUnit.LITRE);
+		demonstrateDivision(litre, new Quantity<>(2.0, VolumeUnit.LITRE));
 
-        // Subtraction
-        demonstrateSubtraction(feet, inches);
+		// Cross-unit volume operation
+		demonstrateAddition(litre, gallon, VolumeUnit.MILLILITRE);
 
-        // Division
-        demonstrateDivision(
-                new Quantity<>(10.0, LengthUnit.FEET),
-                new Quantity<>(2.0, LengthUnit.FEET)
-        );
+		// ===== TEMPERATURE =====
+		System.out.println("\n===== TEMPERATURE =====");
 
-        // Conversion
-        demonstrateConversion(
-                new Quantity<>(1.0, LengthUnit.FEET),
-                LengthUnit.INCHES
-        );
+		Quantity<TemperatureUnit> tempC = new Quantity<>(0.0, TemperatureUnit.CELSIUS);
+		Quantity<TemperatureUnit> tempF = new Quantity<>(32.0, TemperatureUnit.FAHRENHEIT);
 
-        // Equality
-        demonstrateEquality(
-                new Quantity<>(12.0, LengthUnit.INCHES),
-                new Quantity<>(1.0, LengthUnit.FEET)
-        );
-    }
+		demonstrateEquality(tempC, tempF);
+		demonstrateConversion(tempC, TemperatureUnit.FAHRENHEIT);
+
+		try {
+			demonstrateAddition(tempC, new Quantity<>(10.0, TemperatureUnit.CELSIUS), TemperatureUnit.CELSIUS);
+		} catch (UnsupportedOperationException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+
+		try {
+			demonstrateSubtraction(tempC, new Quantity<>(10.0, TemperatureUnit.CELSIUS), TemperatureUnit.CELSIUS);
+		} catch (UnsupportedOperationException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+
+		try {
+			demonstrateDivision(tempC, new Quantity<>(2.0, TemperatureUnit.CELSIUS));
+		} catch (UnsupportedOperationException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+
+	}
 }
