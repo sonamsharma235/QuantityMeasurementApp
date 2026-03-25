@@ -1,30 +1,97 @@
 package com.example.QuantityMeasurementApp.controller;
 
-import com.example.QuantityMeasurementApp.entity.Quantity;
-import com.example.QuantityMeasurementApp.repository.IQuantityMeasurementRepository;
-import com.example.QuantityMeasurementApp.service.IQuantityMeasurementService;
-import com.example.QuantityMeasurementApp.units.IMeasurable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.example.QuantityMeasurementApp.core.Quantity;
+import com.example.QuantityMeasurementApp.dto.QuantityRequestDTO;
+import com.example.QuantityMeasurementApp.dto.TwoQuantityRequestDTO;
+import com.example.QuantityMeasurementApp.service.QuantityMeasurementServiceImpl;
+import com.example.QuantityMeasurementApp.units.IMeasurable;
+import com.example.QuantityMeasurementApp.units.LengthUnit;
+import com.example.QuantityMeasurementApp.units.TemperatureUnit;
+import com.example.QuantityMeasurementApp.units.VolumeUnit;
+import com.example.QuantityMeasurementApp.units.WeightUnit;
+
+@RestController
+@RequestMapping("/api/v1/quantities")
 public class QuantityMeasurementController {
 
-	private final IQuantityMeasurementService service;
-	private final IQuantityMeasurementRepository repository;
+	private final QuantityMeasurementServiceImpl service;
 
-	public QuantityMeasurementController(IQuantityMeasurementService service,
-			IQuantityMeasurementRepository repository) {
+	public QuantityMeasurementController(QuantityMeasurementServiceImpl service) {
 		this.service = service;
-		this.repository = repository;
 	}
 
-	public <U extends IMeasurable> Quantity<U> add(Quantity<U> q1, Quantity<U> q2, U unit) {
-		return service.add(q1, q2);
+	// 🔹 Convert DTO → Domain
+	private Quantity<?> toDomain(QuantityRequestDTO dto) {
+		IMeasurable unit = getUnit(dto.getMeasurementType(), dto.getUnit());
+		return new Quantity<>(dto.getValue(), unit);
 	}
 
-	public <U extends IMeasurable> Quantity<U> subtract(Quantity<U> q1, Quantity<U> q2, U unit) {
-		return service.subtract(q1, q2);
+	// 🔹 SIMPLE unit logic (no Map)
+	private IMeasurable getUnit(String type, String unit) {
+		if (unit == null) {
+			throw new IllegalArgumentException("Unit cannot be null");
+		}
+		switch (type) {
+			case "LengthUnit":
+				return LengthUnit.valueOf(unit.toUpperCase());
+			case "WeightUnit":
+				return WeightUnit.valueOf(unit.toUpperCase());
+			case "VolumeUnit":
+				return VolumeUnit.valueOf(unit.toUpperCase());
+			case "TemperatureUnit":
+				return TemperatureUnit.valueOf(unit.toUpperCase());
+			default:
+				throw new IllegalArgumentException("Invalid type");
+		}
 	}
 
-	public <U extends IMeasurable> double divide(Quantity<U> q1, Quantity<U> q2) {
-		return service.divide(q1, q2);
+	@PostMapping("/add")
+	public ResponseEntity<?> add(@RequestBody TwoQuantityRequestDTO dto) throws Exception {
+		Quantity<?> q1 = toDomain(dto.getQuantity1());
+		Quantity<?> q2 = toDomain(dto.getQuantity2());
+
+
+		return ResponseEntity.ok(service.add(q1, q2));
+	}
+
+	@PostMapping("/subtract")
+	public ResponseEntity<?> subtract(@RequestBody TwoQuantityRequestDTO dto) throws Exception {
+		Quantity<?> q1 = toDomain(dto.getQuantity1());
+		Quantity<?> q2 = toDomain(dto.getQuantity2());
+
+		return ResponseEntity.ok(service.subtract(q1, q2));
+	}
+
+	@PostMapping("/convert")
+	public ResponseEntity<?> convert(@RequestBody QuantityRequestDTO dto) {
+
+		Quantity<?> q = toDomain(dto);
+		IMeasurable target = getUnit(dto.getMeasurementType(), dto.getTargetUnit());
+
+		return ResponseEntity.ok(service.convert(q, target));
+	}
+
+	@PostMapping("/equals")
+	public ResponseEntity<?> equals(@RequestBody TwoQuantityRequestDTO dto) throws Exception {
+		return ResponseEntity.ok(
+				service.checkEquality(
+						toDomain(dto.getQuantity1()),
+						toDomain(dto.getQuantity2())
+				)
+		);
+	}
+
+	@PostMapping("/divide")
+	public ResponseEntity<?> divide(@RequestBody TwoQuantityRequestDTO dto) throws Exception {
+		return ResponseEntity.ok(
+				service.divide(
+						toDomain(dto.getQuantity1()),
+						toDomain(dto.getQuantity2())
+				)
+		);
 	}
 }

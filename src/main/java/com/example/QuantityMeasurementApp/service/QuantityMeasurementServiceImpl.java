@@ -1,42 +1,87 @@
 package com.example.QuantityMeasurementApp.service;
 
-import com.example.QuantityMeasurementApp.entity.Quantity;
-import com.example.QuantityMeasurementApp.repository.IQuantityMeasurementRepository;
+import com.example.QuantityMeasurementApp.core.Quantity;
+import com.example.QuantityMeasurementApp.entity.OperationHistoryEntity;
+import com.example.QuantityMeasurementApp.entity.QuantityMeasurementEntity;
+import com.example.QuantityMeasurementApp.repository.OperationHistoryRepository;
+import com.example.QuantityMeasurementApp.repository.QuantityMeasurementRepository;
 import com.example.QuantityMeasurementApp.units.IMeasurable;
+import org.springframework.stereotype.Service;
 
-public class QuantityMeasurementServiceImpl implements IQuantityMeasurementService {
 
-	private final IQuantityMeasurementRepository repository;
+@Service
+public class QuantityMeasurementServiceImpl implements QuantityService{
+    private final QuantityMeasurementRepository repo;
 
-	public QuantityMeasurementServiceImpl(IQuantityMeasurementRepository repository) {
-		this.repository = repository;
-	}
+    private final OperationHistoryRepository historyRepo;
 
-	@Override
-	public <U extends IMeasurable> Quantity<U> add(Quantity<U> q1, Quantity<U> q2) {
 
-		Quantity<U> result = q1.add(q2, q1.getUnit());
+    public QuantityMeasurementServiceImpl(QuantityMeasurementRepository repo, OperationHistoryRepository historyRepo) {
+        this.repo = repo;
+        this.historyRepo = historyRepo;
+    }
 
-		repository.save(q1.getUnit().getClass().getSimpleName(), "ADD", q1.getValue(), ((Enum<?>) q1.getUnit()).name(),
-				q2.getValue(), ((Enum<?>) q2.getUnit()).name(), result.getValue(), ((Enum<?>) result.getUnit()).name());
+    private void save(Quantity<?> q) {
+        repo.save(new QuantityMeasurementEntity(
+                q.getValue(),
+                q.getUnit().getUnitName(),
+                q.getUnit().getClass().getSimpleName()
+        ));
+    }
+    private void saveHistory(String op, Quantity<?> q1, Quantity<?> q2, Object result) {
 
-		return result;
-	}
+        OperationHistoryEntity history = new OperationHistoryEntity(
+                op,
+                q1.toString(),
+                q2 != null ? q2.toString() : null,
+                result.toString()
+        );
 
-	@Override
-	public <U extends IMeasurable> Quantity<U> subtract(Quantity<U> q1, Quantity<U> q2) {
+        historyRepo.save(history);
+    }
 
-		Quantity<U> result = q1.subtract(q2, q1.getUnit());
+    @Override
+    public Quantity<?> add(Quantity<?> q1, Quantity<?> q2) throws Exception {
+        Quantity<?> result = q1.add(q2);
+        save(q1);
+        save(q2);
+        saveHistory("ADD", q1, q2, result);
+        return result;
+    }
 
-		repository.save(q1.getUnit().getClass().getSimpleName(), "SUBTRACT", q1.getValue(),
-				((Enum<?>) q1.getUnit()).name(), q2.getValue(), ((Enum<?>) q2.getUnit()).name(), result.getValue(),
-				((Enum<?>) result.getUnit()).name());
+    @Override
+    public Quantity<?> subtract(Quantity<?> q1, Quantity<?> q2) throws Exception {
+        Quantity<?> result = q1.subtract(q2);
+        save(q1);
+        save(q2);
+        saveHistory("SUBTRACT",q1,q2,result);
+        return result;
+    }
 
-		return result;
-	}
+    @Override
+    public double divide(Quantity<?> q1, Quantity<?> q2) throws Exception {
+        double result = q1.divide(q2);
+        save(q1);
+        save(q2);
+        saveHistory("DIVIDE",q1,q2,result);
+        return result;
+    }
 
-	@Override
-	public <U extends IMeasurable> double divide(Quantity<U> q1, Quantity<U> q2) {
-		return q1.divide(q2);
-	}
+    @Override
+    public boolean checkEquality(Quantity<?> q1, Quantity<?> q2) throws Exception {
+        boolean result = q1.equals(q2);
+        save(q1);
+        save(q2);
+        saveHistory("COMPARE", q1, q2, result);
+        return q1.equals(q2);
+    }
+
+    @Override
+    public Quantity<?> convert(Quantity<?> quantity, IMeasurable targetUnit) {
+        Quantity<?> result = quantity.convertTo(targetUnit);
+        save(quantity);
+        saveHistory("CONVERT",quantity,null,result);
+        return result;
+    }
+
 }

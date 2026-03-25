@@ -24,6 +24,11 @@
  </properties>
 
  <dependencies>
+ 
+ <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
 
   <!-- Spring Boot Starter -->
   <dependency>
@@ -38,11 +43,52 @@
    <scope>test</scope>
   </dependency>
   
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>1.18.30</version> <!-- Use latest version -->
+        <scope>provided</scope>
+    </dependency>
+    
+     <!-- ✅ Spring Data JPA -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!-- ✅ Validation -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
   <dependency>
     <groupId>com.h2database</groupId>
     <artifactId>h2</artifactId>
     <version>2.2.224</version>
-</dependency>
+  </dependency>
+  
+   <!-- ✅ Logging helper (Janino) -->
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>janino</artifactId>
+            <version>3.1.10</version>
+        </dependency>
+
+        <!-- ✅ Testing -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Optional: Mockito -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.5.0</version>
+            <scope>test</scope>
+        </dependency>
 
  </dependencies>
 

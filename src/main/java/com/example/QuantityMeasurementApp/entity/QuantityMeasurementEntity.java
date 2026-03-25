@@ -1,44 +1,69 @@
 package com.example.QuantityMeasurementApp.entity;
 
+
+import jakarta.persistence.*;
+import lombok.*;
+
+
+
+@Entity
+@Table(name = "quantity_measurements")
+
 public class QuantityMeasurementEntity {
-	private String measurementType;
-	private String operationType;
-	private double value1;
-	private double value2;
-	private boolean result;
 
-	public QuantityMeasurementEntity(String measurementType, String operationType, double value1, double value2,
-			boolean result) {
-		this.measurementType = measurementType;
-		this.operationType = operationType;
-		this.value1 = value1;
-		this.value2 = value2;
-		this.result = result;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	public String getMeasurementType() {
-		return measurementType;
-	}
+    @Column(name="quantity_value", nullable=false)
+    private double quantityValue;
 
-	public String getOperationType() {
-		return operationType;
-	}
+    @Column(name="unit", nullable=false)
+    private String unit;
 
-	public double getValue1() {
-		return value1;
-	}
+    @Column(name="measurement_type", nullable=false)
+    private String measurementType;
 
-	public double getValue2() {
-		return value2;
-	}
+    public QuantityMeasurementEntity() {
+    }
 
-	public boolean isResult() {
-		return result;
-	}
+    public QuantityMeasurementEntity(double value, String unit, String measurementType) {
+        this.quantityValue = value;
+        this.unit = unit;
+        this.measurementType = measurementType;
+    }
 
-	@Override
-	public String toString() {
-		return "Type: " + measurementType + ", Operation: " + operationType + ", Value1: " + value1 + ", Value2: "
-				+ value2 + ", Result: " + result;
-	}
+    public double getQuantityValue() {
+        return quantityValue;
+    }
+
+    public void setQuantityValue(double value) {
+        this.quantityValue = value;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getMeasurementType() {
+        return measurementType;
+    }
+
+    public void setMeasurementType(String measurementType) {
+        this.measurementType = measurementType;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%.2f %s", quantityValue, unit);
+    }
+
 }

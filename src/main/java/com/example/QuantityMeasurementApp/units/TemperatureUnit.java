@@ -1,57 +1,75 @@
 package com.example.QuantityMeasurementApp.units;
 
-import com.example.QuantityMeasurementApp.exception.QuantityMeasurementException;
+import java.util.function.Function;
 
-public enum TemperatureUnit implements IMeasurable {
+import com.example.QuantityMeasurementApp.exception.UnsupportedOperationException;
+import com.example.QuantityMeasurementApp.utils.SupportArithmetic;
+public enum TemperatureUnit implements IMeasurable{
 
-	CELSIUS {
-		@Override
-		public double convertToBaseUnit(double value) {
-			return value;
-		}
+    CELSIUS(true,false,false),
+    FAHRENHEIT(false,false,true),
+    KELVIN(false,true,false);
 
-		@Override
-		public double convertFromBaseUnit(double value) {
-			return value;
-		}
-	},
+    private final Function<Double, Double> FAHRENHEIT_TO_CELSIUS = (fahrenheit) -> ((fahrenheit-32)*5)/9;
+    private final Function<Double, Double> KELVIN_TO_CELSIUS = (kelvin) -> kelvin-273.15;
+    private final Function<Double, Double> CELSIUS_TO_CELSIUS = (celsius) -> celsius;
+    private final Function<Double, Double> CELSIUS_TO_KELVIN = (celsius) -> celsius+273.15;
+    private final Function<Double, Double> CELSIUS_TO_FAHRENHEIT = (celsius) -> ((celsius*9)/5)+32;
 
-	FAHRENHEIT {
-		@Override
-		public double convertToBaseUnit(double value) {
-			return (value - 32) * 5 / 9;
-		}
+    private final boolean isCelsius;
+    private final boolean isKelvin;
+    private final boolean isFahrenheit;
 
-		@Override
-		public double convertFromBaseUnit(double value) {
-			return value * 9 / 5 + 32;
-		}
-	},
+    private TemperatureUnit(boolean isCelsius, boolean isKelvin, boolean isFahrenheit) {
+        this.isCelsius = isCelsius;
+        this.isKelvin = isKelvin;
+        this.isFahrenheit = isFahrenheit;
+    }
 
-	KELVIN {
-		@Override
-		public double convertToBaseUnit(double value) {
-			return value - 273.15;
-		}
 
-		@Override
-		public double convertFromBaseUnit(double value) {
-			return value + 273.15;
-		}
-	};
+    SupportArithmetic supportsArithmetic = () -> false;
 
-	@Override
-	public double getConversionFactor() {
-		return 1.0;
-	}
+    @Override
+    public String getUnitName(){
+        return this.name();
+    }
 
-	@Override
-	public String getUnitName() {
-		return this.name();
-	}
+    @Override
+    public double getConversionFactor(){
+        return 1.0;
+    }
 
-	@Override
-	public void validateOperationSupport(String operation) {
-		throw new QuantityMeasurementException("Temperature does not support " + operation + " operation");
-	}
+    @Override
+    public double convertToBaseUnit(double value){
+        if(isCelsius){
+            return CELSIUS_TO_CELSIUS.apply(value);
+        }
+        if(isKelvin){
+            return KELVIN_TO_CELSIUS.apply(value);
+        }
+        return FAHRENHEIT_TO_CELSIUS.apply(value);
+    }
+
+    @Override
+    public double convertFromBaseUnit(double baseValue){
+        if(isCelsius){
+            return CELSIUS_TO_CELSIUS.apply(baseValue);
+        }
+        if(isKelvin){
+            return CELSIUS_TO_KELVIN.apply(baseValue);
+        }
+        return CELSIUS_TO_FAHRENHEIT.apply(baseValue);
+    }
+
+    @Override
+    public boolean supportsArithmetic(){
+        return supportsArithmetic.isSupported();
+    }
+
+    @Override
+    public void validateOperationSupport(String operation) throws UnsupportedOperationException{
+        if(!supportsArithmetic()){
+            throw new UnsupportedOperationException("Temperature does not supports "+operation+" operations.");
+        }
+    }
 }
