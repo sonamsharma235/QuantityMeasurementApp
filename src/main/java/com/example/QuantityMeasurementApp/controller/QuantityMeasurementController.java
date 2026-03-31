@@ -1,13 +1,17 @@
 package com.example.QuantityMeasurementApp.controller;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.QuantityMeasurementApp.core.Quantity;
 import com.example.QuantityMeasurementApp.dto.QuantityRequestDTO;
 import com.example.QuantityMeasurementApp.dto.TwoQuantityRequestDTO;
+import com.example.QuantityMeasurementApp.entity.User;
+import com.example.QuantityMeasurementApp.repository.UserRepository;
 import com.example.QuantityMeasurementApp.service.QuantityMeasurementServiceImpl;
 import com.example.QuantityMeasurementApp.units.IMeasurable;
 import com.example.QuantityMeasurementApp.units.LengthUnit;
@@ -16,7 +20,7 @@ import com.example.QuantityMeasurementApp.units.VolumeUnit;
 import com.example.QuantityMeasurementApp.units.WeightUnit;
 
 @RestController
-@RequestMapping("/api/v1/quantities")
+@RequestMapping("/api/v1")
 public class QuantityMeasurementController {
 
 	private final QuantityMeasurementServiceImpl service;
