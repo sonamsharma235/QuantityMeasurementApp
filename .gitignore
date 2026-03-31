@@ -1,0 +1,11 @@
+# Ignore everything
+*
+
+# Allow only required files
+!src/
+!src/**
+!README.md
+!pom.xml
+
+# Keep gitignore itself
+!.gitignore
