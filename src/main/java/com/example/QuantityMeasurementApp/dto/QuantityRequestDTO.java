@@ -34,12 +34,12 @@ public class QuantityRequestDTO {
 		this.measurementType = measurementType;
 	}
 
-	public Double getValue() {
+	public Double getQuantityValue() {
 		return quantityValue;
 	}
 
-	public void setValue(Double value) {
-		this.quantityValue = value;
+	public void setQuantityValue(Double quantityValue) {
+		this.quantityValue = quantityValue;
 	}
 
 	public String getUnit() {

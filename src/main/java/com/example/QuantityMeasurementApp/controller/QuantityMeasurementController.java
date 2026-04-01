@@ -2,6 +2,7 @@ package com.example.QuantityMeasurementApp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.QuantityMeasurementApp.core.Quantity;
 import com.example.QuantityMeasurementApp.dto.QuantityRequestDTO;
 import com.example.QuantityMeasurementApp.dto.TwoQuantityRequestDTO;
-import com.example.QuantityMeasurementApp.entity.User;
+import com.example.QuantityMeasurementApp.entity.UserEntity;
 import com.example.QuantityMeasurementApp.repository.UserRepository;
 import com.example.QuantityMeasurementApp.service.QuantityMeasurementServiceImpl;
 import com.example.QuantityMeasurementApp.units.IMeasurable;
@@ -32,7 +33,7 @@ public class QuantityMeasurementController {
 	// 🔹 Convert DTO → Domain
 	private Quantity<?> toDomain(QuantityRequestDTO dto) {
 		IMeasurable unit = getUnit(dto.getMeasurementType(), dto.getUnit());
-		return new Quantity<>(dto.getValue(), unit);
+		return new Quantity<>(dto.getQuantityValue(), unit);
 	}
 
 	// 🔹 SIMPLE unit logic (no Map)

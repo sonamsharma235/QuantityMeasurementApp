@@ -1,14 +1,24 @@
-package com.example.QuantityMeasurementApp.dto;
+package com.example.QuantityMeasurementApp.entity;
 
-import jakarta.validation.constraints.*;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
 
-@AllArgsConstructor
 @NoArgsConstructor
-public class UserSignUpDTO {
+@AllArgsConstructor
+public class UserEntity {
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getUserName() {
         return userName;
     }
@@ -33,18 +43,13 @@ public class UserSignUpDTO {
         this.password = password;
     }
 
-    @NotBlank(message = "Name is required")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String userName;
-
-    @Email(message = "Invalid Email Format")
-    @NotBlank(message = "email is required")
+    @Column(unique = true)
     private String email;
-
-    @Size(min = 8, message = "Password must be at least 8 characters")
-    @Pattern(
-            regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$%_&*]).+$",
-            message = "Password must contain uppercase, lowercase, number and special character"
-    )
     private String password;
+
 
 }

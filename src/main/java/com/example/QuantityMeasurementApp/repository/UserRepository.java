@@ -1,10 +1,15 @@
 package com.example.QuantityMeasurementApp.repository;
 
-import java.util.Optional;
-import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.QuantityMeasurementApp.entity.User;
 
-public interface UserRepository extends JpaRepository<User,Long>{
-	Optional<User> findByUsername(String username);
+import com.example.QuantityMeasurementApp.entity.UserEntity;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
+    Optional<UserEntity> findByEmail(String email);
+
 
 }
