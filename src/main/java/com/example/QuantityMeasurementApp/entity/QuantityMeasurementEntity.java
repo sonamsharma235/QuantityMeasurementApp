@@ -2,6 +2,7 @@ package com.example.QuantityMeasurementApp.entity;
 
 
 import jakarta.persistence.*;
+
 import lombok.*;
 
 
