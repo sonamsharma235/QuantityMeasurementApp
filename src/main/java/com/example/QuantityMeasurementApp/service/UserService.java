@@ -24,7 +24,7 @@ public class UserService {
 
     public AuthResponseDTO register(UserSignUpDTO dto) {
 
-        if (repo.findByEmail(dto.getEmail()).isPresent()) {
+        if (repo.findByEmailIgnoreCase(dto.getEmail()).isPresent()) {
             throw new RuntimeException("Email already exists");
         }
 
@@ -42,7 +42,7 @@ public class UserService {
 
     public AuthResponseDTO login(UserLoginDTO dto) {
 
-        UserEntity user = repo.findByEmail(dto.getEmail())
+        UserEntity user = repo.findByEmailIgnoreCase(dto.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         if (!encoder.matches(dto.getPassword(), user.getPassword())) {

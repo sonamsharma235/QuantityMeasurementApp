@@ -34,7 +34,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         String email = oAuth2User.getAttribute("email");
         String name = oAuth2User.getAttribute("name");
 
-        Optional<UserEntity> existingUser = repo.findByEmail(email);
+        Optional<UserEntity> existingUser = repo.findByEmailIgnoreCase(email);
 
         UserEntity user;
 

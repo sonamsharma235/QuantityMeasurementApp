@@ -1,5 +1,7 @@
 package com.example.QuantityMeasurementApp.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.QuantityMeasurementApp.core.Quantity;
 import com.example.QuantityMeasurementApp.dto.QuantityRequestDTO;
 import com.example.QuantityMeasurementApp.dto.TwoQuantityRequestDTO;
+import com.example.QuantityMeasurementApp.entity.OperationHistoryEntity;
 import com.example.QuantityMeasurementApp.entity.UserEntity;
 import com.example.QuantityMeasurementApp.repository.UserRepository;
 import com.example.QuantityMeasurementApp.service.QuantityMeasurementServiceImpl;
