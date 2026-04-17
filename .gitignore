@@ -9,3 +9,4 @@
 
 # Keep gitignore itself
 !.gitignore
+.env
