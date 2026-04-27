@@ -6,6 +6,8 @@
 !src/**
 !README.md
 !pom.xml
+!Dockerfile
+
 
 # Keep gitignore itself
 !.gitignore
