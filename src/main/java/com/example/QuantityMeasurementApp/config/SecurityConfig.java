@@ -41,9 +41,13 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/api/v1/users/**",   // login/register
-                                "/oauth2/**",         // IMPORTANT
-                                "/login/**","/h2-console/**"          // IMPORTANT
+                        		"/api/v1/users/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**",   // ADD THIS (MOST IMPORTANT)
+                                "/oauth2/**",
+                                "/login/**",
+                                "/h2-console/**"        // IMPORTANT
                         ).permitAll()
                         .anyRequest().authenticated()
                 ).headers(headers -> headers
